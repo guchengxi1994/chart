@@ -1,0 +1,1 @@
+enum BarChartDirection { horizontal, vertical }
