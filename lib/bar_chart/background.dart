@@ -1,4 +1,5 @@
 import 'package:chart/bar_chart/enums.dart';
+import 'package:chart/dataset/base_dataset.dart';
 import 'package:flutter/material.dart';
 
 import 'animated_background.dart';
@@ -11,7 +12,8 @@ class Background extends StatefulWidget {
       this.width = 300,
       this.decoration =
           const BoxDecoration(color: Color.fromARGB(255, 224, 137, 240)),
-      this.indicatorSize = 30})
+      this.indicatorSize = 30,
+      required this.info})
       : assert(width > indicatorSize &&
             height > indicatorSize &&
             indicatorSize > 20);
@@ -19,6 +21,7 @@ class Background extends StatefulWidget {
   final double height;
   final BoxDecoration decoration;
   final double indicatorSize;
+  final List<BarInfo> info;
 
   @override
   State<Background> createState() => _BackgroundState();
@@ -79,10 +82,13 @@ class _BackgroundState extends State<Background> with TickerProviderStateMixin {
                   height: widget.height,
                   child: CustomPaint(
                     painter: BarPainter(
+                      currentPosition:
+                          valueNotifier.value + widget.indicatorSize / 2,
                       width: widget.width,
                       height: widget.height,
                       indicatorSize: widget.indicatorSize,
                       left: valueNotifier.value + widget.indicatorSize / 2,
+                      info: widget.info,
                     ),
                   ),
                 ),

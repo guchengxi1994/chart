@@ -33,12 +33,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Background(),
+            BarChart(
+              dataset: Dataset(data: [
+                DatasetData(label: "1", index: 1, value: 100),
+                DatasetData(label: "2", index: 2, value: 20),
+                DatasetData(label: "3", index: 3, value: 80),
+                DatasetData(label: "4", index: 4, value: 64),
+                DatasetData(label: "5", index: 5, value: 13),
+                DatasetData(label: "6", index: 6, value: 348),
+                DatasetData(label: "7", index: 7, value: 34),
+                DatasetData(label: "8", index: 8, value: 57),
+                DatasetData(label: "9", index: 9, value: 13),
+                DatasetData(label: "10", index: 10, value: 54),
+              ]),
+            ),
           ],
         ),
       ),
