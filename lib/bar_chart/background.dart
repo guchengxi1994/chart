@@ -6,22 +6,22 @@ import 'animated_background.dart';
 import 'bar_painter.dart';
 
 class Background extends StatefulWidget {
-  const Background(
-      {super.key,
-      this.height = 300,
-      this.width = 300,
-      this.decoration =
-          const BoxDecoration(color: Color.fromARGB(255, 224, 137, 240)),
-      this.indicatorSize = 30,
-      required this.info})
-      : assert(width > indicatorSize &&
+  const Background({
+    super.key,
+    this.height = 300,
+    this.width = 300,
+    this.decoration =
+        const BoxDecoration(color: Color.fromARGB(255, 224, 137, 240)),
+    this.indicatorSize = 30,
+    required this.info,
+  }) : assert(width > indicatorSize &&
             height > indicatorSize &&
             indicatorSize > 20);
   final double width;
   final double height;
   final BoxDecoration decoration;
   final double indicatorSize;
-  final List<BarInfo> info;
+  final BarChartInfomation? info;
 
   @override
   State<Background> createState() => _BackgroundState();

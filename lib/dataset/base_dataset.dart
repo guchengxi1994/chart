@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 class Dataset<S extends DatasetData> {
   final List<S> data;
 
@@ -12,22 +14,71 @@ class DatasetData {
   DatasetData({required this.label, this.value = 0, required this.index});
 }
 
+Set<double> divideNumber(double number) {
+  Set<double> results = {};
+  double step = number / 100;
+
+  for (int i = 1; i < step; i++) {
+    double value = i * 100;
+    if (value < number) {
+      results.add(value);
+    }
+  }
+
+  return results;
+}
+
 extension DataExtension<S extends DatasetData> on List<S> {
-  List<BarInfo> getBarPositions(
+  List<double> getGuideLines() {
+    if (isEmpty) {
+      return [];
+    }
+
+    double max = reduce((c, n) => c.value > n.value ? c : n).value;
+
+    if (max <= 100) {
+      return [0, 100];
+    }
+
+    List dividers = (divideNumber(max)..add(max)).toList();
+
+    return [0, ...dividers];
+  }
+
+  BarChartInfomation? getBarChartInfomation(
       {double coordinate = 300,
       double value = 300,
       double indicatorSize = 30}) {
+    if (isEmpty) {
+      return null;
+    }
+
     double max = reduce((c, n) => c.value > n.value ? c : n).value;
+
+    List<double> guideLines = getGuideLines();
+
+    // print("getGuideLines  $guideLines");
+
+    final List<double> guideLineHeight = guideLines.map((e) {
+      return (value - 2 * indicatorSize) -
+          e / max * (value - 2 * indicatorSize);
+    }).toList();
+
+    // print("getGuideLines  $guideLineHeight");
+
+    max = math.max(max, guideLines.last);
 
     final result = <BarInfo>[];
     const double totalSpacingRatio = 1.5;
-    final double barWidth = coordinate / (length * totalSpacingRatio);
+    double r = totalSpacingRatio * length;
+
+    final double barWidth = (coordinate - /* padding */ 40) / r;
     final double barSpacing = barWidth / 2;
 
-    double xOffset = barSpacing / 2;
+    double xOffset = /* padding */ barSpacing / 2 + 20;
 
     for (int i = 0; i < length; i++) {
-      double x = xOffset + (barWidth / 2);
+      double x = xOffset;
       double y = this[i].value / max * (value - 2 * indicatorSize);
       result.add(BarInfo(
           label: this[i].label,
@@ -38,8 +89,20 @@ extension DataExtension<S extends DatasetData> on List<S> {
       xOffset += barWidth + barSpacing;
     }
 
-    return result;
+    return BarChartInfomation(
+        guideLineHeight: guideLineHeight, info: result, guideLines: guideLines);
   }
+}
+
+class BarChartInfomation {
+  final List<BarInfo> info;
+  final List<double> guideLines;
+  final List<double> guideLineHeight;
+
+  BarChartInfomation(
+      {required this.guideLineHeight,
+      required this.guideLines,
+      required this.info});
 }
 
 class BarInfo extends DatasetData {

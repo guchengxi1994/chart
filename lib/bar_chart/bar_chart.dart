@@ -22,21 +22,13 @@ class BarChart extends StatefulWidget {
 }
 
 class _BarChartState extends State<BarChart> {
-  late List<BarInfo> info = [];
-
-  @override
-  void initState() {
-    super.initState();
-    info = widget.dataset.data
-        .getBarPositions(coordinate: widget.width, value: widget.height);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Background(
       height: widget.height,
       width: widget.width,
-      info: info,
+      info: widget.dataset.data.getBarChartInfomation(
+          coordinate: widget.width, value: widget.height),
     );
   }
 }
