@@ -28,7 +28,7 @@ extension DataExtension<S extends DatasetData> on List<S> {
 
     for (int i = 0; i < length; i++) {
       double x = xOffset + (barWidth / 2);
-      double y = this[i].value / max * (value - indicatorSize);
+      double y = this[i].value / max * (value - 2 * indicatorSize);
       result.add(BarInfo(
           label: this[i].label,
           index: this[i].index,

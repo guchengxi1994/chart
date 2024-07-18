@@ -35,7 +35,7 @@ class AnimatedBackground extends CustomClipper<Path> {
 
       final (p1x, p1y) = (
         (reclip.value + indicatorSize + reclip.value) / 2,
-        size.height - indicatorSize
+        size.height - indicatorSize / 1.5
       );
 
       final (p2x, p2y) = (reclip.value + indicatorSize, size.height);
