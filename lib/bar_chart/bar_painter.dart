@@ -1,3 +1,4 @@
+import 'package:chart/bar_chart/config.dart';
 import 'package:chart/chart.dart';
 import 'package:flutter/material.dart';
 
@@ -8,22 +9,23 @@ class BarPainter extends CustomPainter {
   final double left;
   final BarChartInfomation? info;
   final double currentPosition;
+  final BarConfig barConfig;
 
-  BarPainter({
-    required this.indicatorSize,
-    required this.width,
-    required this.height,
-    required this.left,
-    required this.info,
-    required this.currentPosition,
-  });
+  BarPainter(
+      {required this.indicatorSize,
+      required this.width,
+      required this.height,
+      required this.left,
+      required this.info,
+      required this.currentPosition,
+      required this.barConfig});
 
   @override
   void paint(Canvas canvas, Size size) {
     if (info != null && info!.guideLineHeight.isNotEmpty) {
       var guideLinePainter = Paint()
-        ..color = Colors.grey
-        ..strokeWidth = 1.0;
+        ..color = barConfig.guideLineColor
+        ..strokeWidth = barConfig.guideLineWidth;
 
       for (int i = 0; i < info!.guideLineHeight.length; i++) {
         canvas.drawLine(Offset(0, info!.guideLineHeight[i]),

@@ -1,3 +1,4 @@
+import 'package:chart/bar_chart/config.dart';
 import 'package:chart/bar_chart/enums.dart';
 import 'package:chart/dataset/base_dataset.dart';
 import 'package:flutter/material.dart';
@@ -5,29 +6,26 @@ import 'package:flutter/material.dart';
 import 'animated_background.dart';
 import 'bar_painter.dart';
 
-class Background extends StatefulWidget {
-  const Background({
+class Board extends StatefulWidget {
+  Board({
     super.key,
     this.height = 300,
     this.width = 300,
-    this.decoration =
-        const BoxDecoration(color: Color.fromARGB(255, 224, 137, 240)),
-    this.indicatorSize = 30,
+    required this.barConfig,
     required this.info,
-  }) : assert(width > indicatorSize &&
-            height > indicatorSize &&
-            indicatorSize > 20);
+  }) : assert(width > barConfig.indicatorSize &&
+            height > barConfig.indicatorSize &&
+            barConfig.indicatorSize > 20);
   final double width;
   final double height;
-  final BoxDecoration decoration;
-  final double indicatorSize;
   final BarChartInfomation? info;
+  final BarConfig barConfig;
 
   @override
-  State<Background> createState() => _BackgroundState();
+  State<Board> createState() => _BoardState();
 }
 
-class _BackgroundState extends State<Background> with TickerProviderStateMixin {
+class _BoardState extends State<Board> with TickerProviderStateMixin {
   late ValueNotifier<double> valueNotifier = ValueNotifier(initial);
 
   late AnimationController _controller;
@@ -73,23 +71,25 @@ class _BackgroundState extends State<Background> with TickerProviderStateMixin {
             builder: (c, i, w) {
               return ClipPath(
                 clipper: AnimatedBackground(
-                    indicatorSize: widget.indicatorSize,
+                    indicatorSize: widget.barConfig.indicatorSize,
                     reclip: _animation,
                     direction: BarChartDirection.vertical),
                 child: Container(
-                  decoration: widget.decoration,
+                  decoration:
+                      BoxDecoration(color: widget.barConfig.backgroundColor),
                   width: widget.width,
                   height: widget.height,
                   child: CustomPaint(
                     painter: BarPainter(
-                      currentPosition:
-                          valueNotifier.value + widget.indicatorSize / 2,
-                      width: widget.width,
-                      height: widget.height,
-                      indicatorSize: widget.indicatorSize,
-                      left: valueNotifier.value + widget.indicatorSize / 2,
-                      info: widget.info,
-                    ),
+                        currentPosition: valueNotifier.value +
+                            widget.barConfig.indicatorSize / 2,
+                        width: widget.width,
+                        height: widget.height,
+                        indicatorSize: widget.barConfig.indicatorSize,
+                        left: valueNotifier.value +
+                            widget.barConfig.indicatorSize / 2,
+                        info: widget.info,
+                        barConfig: widget.barConfig),
                   ),
                 ),
               );
@@ -102,7 +102,7 @@ class _BackgroundState extends State<Background> with TickerProviderStateMixin {
             child: GestureDetector(
                 onHorizontalDragUpdate: (details) {
                   if (valueNotifier.value + details.delta.dx.ceil() <
-                          widget.width - widget.indicatorSize &&
+                          widget.width - widget.barConfig.indicatorSize &&
                       valueNotifier.value + details.delta.dx.ceil() > 0) {
                     valueNotifier.value += details.delta.dx.ceil();
                   }
@@ -118,12 +118,12 @@ class _BackgroundState extends State<Background> with TickerProviderStateMixin {
                       ],
                     ),
                     color: Colors.white,
-                    borderRadius:
-                        BorderRadius.circular(widget.indicatorSize - 5),
+                    borderRadius: BorderRadius.circular(
+                        widget.barConfig.indicatorSize - 5),
                     border: Border.all(color: Colors.grey[300]!, width: 0.5),
                   ),
-                  width: widget.indicatorSize - 5,
-                  height: widget.indicatorSize - 5,
+                  width: widget.barConfig.indicatorSize - 5,
+                  height: widget.barConfig.indicatorSize - 5,
                 )))
       ],
     );
