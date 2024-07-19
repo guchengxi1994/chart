@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum HighlightType { lighter, darker, border }
+enum HighlightType { lighter, border }
 
 class BaseConfig {
   final HighlightType highlightType;

@@ -39,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             BarChart(
+              config: const BarConfig(highlightType: HighlightType.lighter),
               dataset: Dataset(data: [
                 DatasetData(label: "1", index: 1, value: 100),
                 DatasetData(label: "2", index: 2, value: 20),

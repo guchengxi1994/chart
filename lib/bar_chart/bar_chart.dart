@@ -3,6 +3,8 @@ import 'package:chart/bar_chart/config.dart';
 import 'package:chart/dataset/base_dataset.dart';
 import 'package:flutter/material.dart';
 
+export './config.dart';
+
 class BarChart extends StatelessWidget {
   const BarChart({
     super.key,

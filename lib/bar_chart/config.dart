@@ -31,6 +31,8 @@ class BarConfig extends BaseConfig {
       this.indicatorSize = 30,
       this.barChartDirection = BarChartDirection.vertical,
       this.guideLineColor = Colors.grey,
-      this.guideLineWidth = 1})
+      this.guideLineWidth = 1,
+      super.backgroundColor,
+      super.highlightType})
       : super();
 }

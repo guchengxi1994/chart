@@ -1,4 +1,3 @@
-import 'package:chart/bar_chart/config.dart';
 import 'package:chart/chart.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +21,9 @@ class BarPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (info != null && info!.guideLineHeight.isNotEmpty) {
+    if (info != null &&
+        info!.guideLineHeight.isNotEmpty &&
+        barConfig.showGuideLine) {
       var guideLinePainter = Paint()
         ..color = barConfig.guideLineColor
         ..strokeWidth = barConfig.guideLineWidth;
@@ -46,14 +47,13 @@ class BarPainter extends CustomPainter {
     }
 
     if (info != null && info!.info.isNotEmpty) {
-      var paint2 = Paint()
-        ..color = Colors.red
+      var barPaint = Paint()
+        ..color = barConfig.barColor
         ..style = PaintingStyle.fill;
 
-      final Paint borderPaint = Paint()
-        ..color = const Color.fromARGB(255, 8, 137, 243) // 边框颜色
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.0; // 边框宽度
+      var barPaintLighter = Paint()
+        ..color = barConfig.barColor.withAlpha(128)
+        ..style = PaintingStyle.fill;
 
       for (final i in info!.info) {
         TextSpan span = TextSpan(
@@ -70,7 +70,12 @@ class BarPainter extends CustomPainter {
         bool isInside =
             i.barX + i.barWidth > currentPosition && i.barX < currentPosition;
 
-        if (isInside) {
+        if (isInside && barConfig.highlightType == HighlightType.border) {
+          final Paint borderPaint = Paint()
+            ..color = const Color.fromARGB(255, 8, 137, 243) // 边框颜色
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 2.0; // 边框宽度
+
           canvas.drawRect(
             Rect.fromLTWH(
               i.barX - 1, // 偏移以考虑边框宽度
@@ -94,7 +99,9 @@ class BarPainter extends CustomPainter {
         canvas.drawRect(
             Rect.fromLTWH(i.barX, height - 2 * indicatorSize - i.barHeight,
                 i.barWidth, i.barHeight),
-            paint2);
+            barConfig.highlightType == HighlightType.lighter && isInside
+                ? barPaintLighter
+                : barPaint);
       }
     }
 
