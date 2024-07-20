@@ -54,12 +54,11 @@ extension DataExtension<S extends DatasetData> on List<S> {
     }
 
     double max = reduce((c, n) => c.value > n.value ? c : n).value;
-
     List<double> guideLines = getGuideLines();
 
     // print("getGuideLines  $guideLines");
 
-    final List<double> guideLineHeight = guideLines.map((e) {
+    final List<double> guideLineValues = guideLines.map((e) {
       return (value - 2 * indicatorSize) -
           e / max * (value - 2 * indicatorSize);
     }).toList();
@@ -90,17 +89,17 @@ extension DataExtension<S extends DatasetData> on List<S> {
     }
 
     return BarChartInfomation(
-        guideLineHeight: guideLineHeight, info: result, guideLines: guideLines);
+        guideLineValues: guideLineValues, info: result, guideLines: guideLines);
   }
 }
 
 class BarChartInfomation {
   final List<BarInfo> info;
   final List<double> guideLines;
-  final List<double> guideLineHeight;
+  final List<double> guideLineValues;
 
   BarChartInfomation(
-      {required this.guideLineHeight,
+      {required this.guideLineValues,
       required this.guideLines,
       required this.info});
 }
@@ -116,4 +115,9 @@ class BarInfo extends DatasetData {
       required this.barHeight,
       required this.barWidth,
       required this.barX});
+
+  @override
+  String toString() {
+    return 'BarInfo(barWidth: $barWidth, barHeight: $barHeight, barX: $barX)';
+  }
 }
