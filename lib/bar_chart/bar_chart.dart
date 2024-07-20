@@ -4,6 +4,7 @@ import 'package:chart/dataset/base_dataset.dart';
 import 'package:flutter/material.dart';
 
 export './config.dart';
+export './enums.dart';
 
 class BarChart extends StatelessWidget {
   const BarChart({
