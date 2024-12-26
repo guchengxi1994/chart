@@ -1,6 +1,6 @@
-import 'package:chart/bar_chart/board.dart';
-import 'package:chart/bar_chart/config.dart';
-import 'package:chart/dataset/base_dataset.dart';
+import 'package:simple_interactive_chart/bar_chart/board.dart';
+import 'package:simple_interactive_chart/bar_chart/config.dart';
+import 'package:simple_interactive_chart/dataset/base_dataset.dart';
 import 'package:flutter/material.dart';
 
 export './config.dart';

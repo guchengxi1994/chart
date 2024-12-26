@@ -1,5 +1,5 @@
-import 'package:chart/bar_chart/enums.dart';
-import 'package:chart/config/base_config.dart';
+import 'package:simple_interactive_chart/bar_chart/enums.dart';
+import 'package:simple_interactive_chart/config/base_config.dart';
 import 'package:flutter/material.dart';
 
 class BarConfig extends BaseConfig {
