@@ -1,0 +1,44 @@
+name: build web and preview
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.27.1
+      
+      - name: Bump build number
+        run: |
+          flutter pub global activate cider
+      
+      - name: Set tag name
+        run: echo "tag_name=v$(cider version)" >> $GITHUB_ENV
+      
+      - name: "Web Build 🔧"
+        run: |
+          cd example/
+          flutter pub get
+          flutter build web --release --base-href="/chart/" 
+      
+      - name: "Web Deploy 🚀"
+        # https://github.com/JamesIves/github-pages-deploy-action
+        uses: JamesIves/github-pages-deploy-action@v4.7.2
+        with:
+          branch: gh-pages
+          folder: ./example/build/web
+
+      - name: Publish release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          generateReleaseNotes: true
+          tag: ${{ env.tag_name }}
+          token: ${{ secrets.RELEASE_TOKEN }}

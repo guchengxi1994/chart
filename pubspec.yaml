@@ -1,10 +1,10 @@
-name: chart
-description: "A new Flutter package project."
+name: simple_interactive_chart
+description: "create simple interactive charts with flutter"
 version: 0.0.1
-homepage:
+homepage: https://github.com/guchengxi1994/chart
 
 environment:
-  sdk: '>=3.4.1 <4.0.0'
+  sdk: ^3.5.4
   flutter: ">=1.17.0"
 
 dependencies:
@@ -14,6 +14,5 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^5.0.0
 
-flutter:

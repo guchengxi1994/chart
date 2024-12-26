@@ -1,4 +1,4 @@
-import 'package:chart/chart.dart';
+import 'package:simple_interactive_chart/simple_interactive_chart.dart';
 import 'package:flutter/material.dart';
 
 class BarPainter extends CustomPainter {
